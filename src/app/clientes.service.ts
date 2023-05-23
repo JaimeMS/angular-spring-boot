@@ -24,7 +24,13 @@ export class ClientesService {
   }
 
   getClientes(): Observable<Cliente[]> {
-    return this.http.get<Cliente[]>(this.apiURL);
+    //const tokenString = localStorage.getItem('access_token');
+    //const token = JSON.parse(tokenString);
+    const token = JSON.parse(localStorage.getItem('access_token') || '{}')
+    const headers = {
+      'Authorization': 'Bearer ' + token.access_token
+    }
+    return this.http.get<Cliente[]>(this.apiURL, { headers });
   }
 
   getClienteById(id: number): Observable<Cliente> {
